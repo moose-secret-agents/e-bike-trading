@@ -5,6 +5,7 @@
   = f.number_field :price
   = f.number_field :range
   = f.number_field :power
+  = f.datetime_select :end_time
 
   = f.primary
   = link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn'

@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  time:
+    formats:
+      countdown_format: "%Y/%m/%d %H:%M:%S"

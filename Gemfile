@@ -52,6 +52,8 @@ gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'master'
 gem 'bootstrap_form'
 
+# Use slim templating language
 gem 'slim-rails'
 
+# Use sorcery as authentication solution
 gem 'sorcery'
