@@ -2,7 +2,9 @@
 
   = f.text_field :brand
   = f.text_field :model
-  = f.text_field :price
+  = f.number_field :price
+  = f.number_field :range
+  = f.number_field :power
 
   = f.primary
   = link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn'

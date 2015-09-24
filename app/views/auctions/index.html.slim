@@ -8,6 +8,7 @@ table.table.table-striped
       th= model_class.human_attribute_name(:brand)
       th= model_class.human_attribute_name(:model)
       th= model_class.human_attribute_name(:price)
+      th= model_class.human_attribute_name(:power)
       th= model_class.human_attribute_name(:created_at)
       th=t '.actions', :default => t("helpers.actions")
   tbody
@@ -17,6 +18,7 @@ table.table.table-striped
         td= auction.brand
         td= auction.model
         td= auction.price
+        td= auction.power
         td=l auction.created_at
         td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(auction), :class => 'btn btn-default btn-xs'
