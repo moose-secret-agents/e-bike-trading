@@ -53,3 +53,5 @@ gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstr
 gem 'bootstrap_form'
 
 gem 'slim-rails'
+
+gem 'sorcery'
