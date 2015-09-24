@@ -57,3 +57,7 @@ gem 'slim-rails'
 
 # Use sorcery as authentication solution
 gem 'sorcery'
+
+# Seed random data
+gem 'fabrication'
+gem 'faker'

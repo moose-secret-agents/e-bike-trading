@@ -5,8 +5,8 @@ table.table.table-striped
   thead
     tr
       th= model_class.human_attribute_name(:id)
-      th= model_class.human_attribute_name(:brand)
-      th= model_class.human_attribute_name(:model)
+      th.col-md-2= model_class.human_attribute_name(:brand)
+      th.col-md-2= model_class.human_attribute_name(:model)
       th= model_class.human_attribute_name(:price)
       th= model_class.human_attribute_name(:power)
       th Time left
