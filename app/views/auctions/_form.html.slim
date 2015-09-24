@@ -1,0 +1,8 @@
+= bootstrap_form_for @auction do |f|
+
+  = f.text_field :brand
+  = f.text_field :model
+  = f.text_field :price
+
+  = f.primary
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn'

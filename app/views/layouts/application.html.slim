@@ -12,7 +12,7 @@ html lang="en"
   body
     = nav_bar static: :top, brand: 'ASE Rails Tutorial' do
       = menu_group do
-        = menu_item 'Auctions', '#'
+        = menu_item 'Auctions', auctions_path
         = menu_item 'User', '#'
 
     .container
