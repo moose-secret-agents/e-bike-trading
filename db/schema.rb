@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150924150315) do
     t.datetime "updated_at", null: false
     t.integer  "power"
     t.integer  "range"
+    t.datetime "time"
     t.datetime "end_time"
   end
 
