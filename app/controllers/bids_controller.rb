@@ -1,5 +1,6 @@
 class BidsController < ApplicationController
   before_action :set_auction, only: [:index, :create, :new]
+  before_action :require_login, only: [:new, :create]
 
   def index
     @bids = @auction.bids

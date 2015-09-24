@@ -1,5 +1,6 @@
 class AuctionsController < ApplicationController
   before_action :set_auction, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:new, :edit, :create, :update]
 
   # GET /auctions
   def index
