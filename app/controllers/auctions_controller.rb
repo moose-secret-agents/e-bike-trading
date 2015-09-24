@@ -12,7 +12,7 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/new
   def new
-    @auction = Auction.new
+    @auction = current_user.auctions.build
   end
 
   # GET /auctions/1/edit
@@ -21,7 +21,7 @@ class AuctionsController < ApplicationController
 
   # POST /auctions
   def create
-    @auction = Auction.new(auction_params)
+    @auction = current_user.auctions.create(auction_params)
 
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'

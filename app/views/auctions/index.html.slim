@@ -5,23 +5,25 @@ table.table.table-striped
   thead
     tr
       th= model_class.human_attribute_name(:id)
-      th.col-md-2= model_class.human_attribute_name(:brand)
+      th.col-md-1= model_class.human_attribute_name(:creator)
+      th.col-md-1= model_class.human_attribute_name(:brand)
       th.col-md-2= model_class.human_attribute_name(:model)
       th= model_class.human_attribute_name(:price)
       th= model_class.human_attribute_name(:power)
       th Time left
-      th= model_class.human_attribute_name(:created_at)
+      th #Bids
       th=t '.actions', :default => t("helpers.actions")
   tbody
     - @auctions.each do |auction|
       tr
         td= link_to auction.id, auction_path(auction)
+        td= link_to short_email(auction.creator), user_path(auction.creator)
         td= auction.brand
         td= auction.model
         td= auction.price
         td= auction.power
         td.countdown= l auction.end_time, format: :countdown_format
-        td= l auction.created_at, format: :countdown_format
+        td= link_to auction.bids.count, auction_bids_path(auction)
         td
           = link_to 'Bid', new_auction_bid_path(auction), class: 'btn btn-primary btn-xs'
           '
