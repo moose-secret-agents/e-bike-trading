@@ -15,6 +15,8 @@ p
   br
   = @auction.price
 
+= link_to 'New Bid', new_auction_bid_path(@auction), class: 'btn btn-default'
+
 = link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
 '
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
