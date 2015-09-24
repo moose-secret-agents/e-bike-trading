@@ -1,0 +1,5 @@
+= bootstrap_form_for :user_session do |f|
+  =f.text_field :email
+  =f.password_field :password
+  =f.primary 'Login'
+= link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn btn-default'
