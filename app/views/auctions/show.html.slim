@@ -14,9 +14,29 @@ p
   strong= model_class.human_attribute_name(:price) + ':'
   br
   = @auction.price
+  br
+  br
+p
+  strong Bids:
+  br
+
+  table.table.table-striped
+    thead
+      tr
+        th= model_class.human_attribute_name(:id)
+        th= model_class.human_attribute_name(:amount)
+        th= model_class.human_attribute_name(:created_at)
+
+    tbody
+      - @auction.bids.each do |bid|
+        tr
+          td= bid.id
+          td= bid.amount
+          td= l bid.created_at, format: :countdown_format
+
 
 = link_to 'New Bid', new_auction_bid_path(@auction), class: 'btn btn-default'
-
+'
 = link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
 '
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
