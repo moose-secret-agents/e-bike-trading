@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    authorize @user
   end
 
   # POST /users
@@ -25,6 +26,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      auto_login(@user)
       redirect_to @user, notice: 'User was successfully created.'
     else
       render :new

@@ -6,8 +6,6 @@ table.table.table-striped
     tr
       th= model_class.human_attribute_name(:id)
       th= model_class.human_attribute_name(:email)
-      th= model_class.human_attribute_name(:crypted_password)
-      th= model_class.human_attribute_name(:salt)
       th= model_class.human_attribute_name(:created_at)
       th=t '.actions', :default => t("helpers.actions")
   tbody
@@ -15,8 +13,6 @@ table.table.table-striped
       tr
         td= link_to user.id, user_path(user)
         td= user.email
-        td= user.crypted_password
-        td= user.salt
         td=l user.created_at
         td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(user), :class => 'btn btn-default btn-xs'

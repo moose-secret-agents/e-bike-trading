@@ -1,20 +1,18 @@
 class BidsController < ApplicationController
   before_action :set_auction, only: [:index, :create, :new]
+  before_action :require_login, only: [:new, :create]
 
-  # GET /bids
   def index
     @bids = @auction.bids
   end
 
-  # GET /bids/new
   def new
-    @auction = Auction.find(params[:auction_id])
-    @bid = @auction.bids.build
+    @bid = current_user.bids.build(auction: @auction)
   end
 
   # POST /bids
   def create
-    @bid = @auction.bids.create(bid_params)
+    @bid = current_user.place_bid_on(@auction, bid_params[:amount])
 
     if bid_is_high_enough? and bid_is_within_time?
       @bid.save

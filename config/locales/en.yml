@@ -24,3 +24,11 @@ en:
   time:
     formats:
       countdown_format: "%Y/%m/%d %H:%M:%S"
+
+  pundit:
+     default: 'You cannot perform this action.'
+     auction_policy:
+       update?: 'You cannot update this auction!'
+       create?: 'You cannot create auctions!'
+       edit?: 'You cannot edit this auction'
+       destroy?: 'You cannot delete this auction'

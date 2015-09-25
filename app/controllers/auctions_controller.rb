@@ -1,5 +1,6 @@
 class AuctionsController < ApplicationController
   before_action :set_auction, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:new, :edit, :create, :update]
 
   # GET /auctions
   def index
@@ -12,16 +13,17 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/new
   def new
-    @auction = Auction.new
+    @auction = current_user.auctions.build
   end
 
   # GET /auctions/1/edit
   def edit
+    authorize @auction
   end
 
   # POST /auctions
   def create
-    @auction = Auction.new(auction_params)
+    @auction = current_user.auctions.create(auction_params)
 
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'
@@ -32,6 +34,8 @@ class AuctionsController < ApplicationController
 
   # PATCH/PUT /auctions/1
   def update
+    authorize @auction
+
     if @auction.update(auction_params)
       redirect_to @auction, notice: 'Auction was successfully updated.'
     else
@@ -41,6 +45,8 @@ class AuctionsController < ApplicationController
 
   # DELETE /auctions/1
   def destroy
+    authorize @auction
+
     @auction.destroy
     redirect_to auctions_url, notice: 'Auction was successfully destroyed.'
   end

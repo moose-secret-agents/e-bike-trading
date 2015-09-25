@@ -44,6 +44,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Get some data about the state of the request
+  gem 'rack-mini-profiler'
 end
 
 # Gems for Bootstrap
@@ -57,3 +60,10 @@ gem 'slim-rails'
 
 # Use sorcery as authentication solution
 gem 'sorcery'
+
+# Use pundit to control user rights management
+gem 'pundit'
+
+# Seed random data
+gem 'fabrication'
+gem 'faker'

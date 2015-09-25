@@ -4,26 +4,26 @@ html lang="en"
     meta charset="utf-8"
     meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
-    title= content_for?(:title) ? yield(:title) : 'E-Bike Trading'
+    title= content_for?(:title) ? yield(:title) : 'ASE E-Bike Trading'
     = csrf_meta_tags
     = stylesheet_link_tag 'application', :media => 'all'
     = javascript_include_tag 'application'
 
   body
-    = nav_bar static: :top, brand: 'ASE Rails Tutorial' do
+    = nav_bar responsive: true, static: :top, brand: 'E-Bike Trading' do
       = menu_group do
         = menu_item 'Auctions', auctions_path
-        = menu_item 'User', users_path
+        = menu_item 'Users', users_path
       = menu_group pull: :right do
         -if current_user
-          = menu_item current_user[:email], user_path(current_user)
-          = menu_item 'logout', logout_path, method: :post
+          = menu_item "Logged in as: #{current_user.email}", user_path(current_user)
+          = menu_item 'Logout', logout_path, method: :post
         -else
-          = menu_item 'login', get_login_path
+          = menu_item 'Login', get_login_path
 
     .container
       .row
-        .col-lg-9
+        .col-lg-10
           = bootstrap_flash
           = yield
-        .col-lg-3
+        .col-lg-2
