@@ -18,6 +18,7 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/1/edit
   def edit
+    authorize @auction
   end
 
   # POST /auctions
@@ -33,6 +34,8 @@ class AuctionsController < ApplicationController
 
   # PATCH/PUT /auctions/1
   def update
+    authorize @auction
+
     if @auction.update(auction_params)
       redirect_to @auction, notice: 'Auction was successfully updated.'
     else
@@ -42,6 +45,8 @@ class AuctionsController < ApplicationController
 
   # DELETE /auctions/1
   def destroy
+    authorize @auction
+
     @auction.destroy
     redirect_to auctions_url, notice: 'Auction was successfully destroyed.'
   end

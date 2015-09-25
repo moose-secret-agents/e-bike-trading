@@ -107,6 +107,8 @@ GEM
       multi_xml (~> 0.5)
       rack (~> 1.2)
     pg (0.18.3)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -204,6 +206,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   pg
+  pundit
   rails (= 4.2.4)
   rails_12factor
   sass-rails (~> 5.0)

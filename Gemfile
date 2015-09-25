@@ -58,6 +58,9 @@ gem 'slim-rails'
 # Use sorcery as authentication solution
 gem 'sorcery'
 
+# Use pundit to control user rights management
+gem 'pundit'
+
 # Seed random data
 gem 'fabrication'
 gem 'faker'
