@@ -1,6 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host : localhost #else rake db:setup wont work
   pool: 5
   username: postgres
   password: postgres

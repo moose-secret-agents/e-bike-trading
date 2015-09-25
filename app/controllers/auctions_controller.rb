@@ -8,6 +8,12 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/1
   def show
+    imgurClient = Imgur.new 'be637321cf3de65'
+    img = Imgur::LocalImage.new('test.jpg', title: 'Test post please ignore')
+    uploaded = imgurClient.upload(img)
+    #puts "uploaded: #{uploaded.link}"
+    #"<img src='#{uploaded.link}' /><p>Uploaded to #{uploaded.link}</p>"
+    @image_link=uploaded.link
   end
 
   # GET /auctions/new

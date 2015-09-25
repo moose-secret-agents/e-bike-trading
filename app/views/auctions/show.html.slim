@@ -2,6 +2,14 @@
 .page-header
   h1=t '.title', :default => model_class.model_name.human.titleize
 
+
+  //img = Imgur::LocalImage.new('test.jpg', title: 'Test post please ignore')
+  //uploaded = imgurClient.upload(img)
+  //puts "uploaded: #{uploaded.link}"
+  //"<img src='#{uploaded.link}' /><p>Uploaded to #{uploaded.link}</p>"
+  //http://i.imgur.com§/yvgL1Xs
+  =image_tag(@image_link)
+
 p
   strong= model_class.human_attribute_name(:brand) + ':'
   br
@@ -16,9 +24,23 @@ p
   = @auction.price
 
 = link_to 'New Bid', new_auction_bid_path(@auction), class: 'btn btn-default'
-
+'
 = link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
 '
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
 '
 = link_to t('.destroy', :default => t("helpers.links.destroy")), auction_path(@auction), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+//'
+//= link_to t('.new', :default => t("helpers.links.new")), new_auction_path, :class => 'btn btn-primary'
+
+h2 Bids
+
+table.table.table-striped
+  thead
+    tr
+      th= model_class.human_attribute_name(:amount)
+  tbody
+    - @auction.bids.each do |bid|
+      tr
+        td= bid.amount
+
