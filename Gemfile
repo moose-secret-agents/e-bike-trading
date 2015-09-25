@@ -44,6 +44,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Get some data about the state of the request
+  gem 'rack-mini-profiler'
 end
 
 # Gems for Bootstrap

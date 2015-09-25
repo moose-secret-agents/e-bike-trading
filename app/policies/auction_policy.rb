@@ -7,7 +7,7 @@ class AuctionPolicy
   end
 
   def destroy?
-    is_creator?
+    is_creator? and auction.bids.count == 0
   end
 
   def edit?

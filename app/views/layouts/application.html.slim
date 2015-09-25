@@ -13,7 +13,7 @@ html lang="en"
     = nav_bar responsive: true, static: :top, brand: 'E-Bike Trading' do
       = menu_group do
         = menu_item 'Auctions', auctions_path
-        = menu_item 'User', users_path
+        = menu_item 'Users', users_path
       = menu_group pull: :right do
         -if current_user
           = menu_item "Logged in as: #{current_user.email}", user_path(current_user)
