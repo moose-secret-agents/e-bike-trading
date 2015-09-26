@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924221058) do
+ActiveRecord::Schema.define(version: 20150926125212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,13 +20,14 @@ ActiveRecord::Schema.define(version: 20150924221058) do
     t.string   "brand"
     t.string   "model"
     t.decimal  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "power"
     t.integer  "range"
     t.string   "imagePath"
     t.datetime "end_time"
     t.integer  "creator_id"
+    t.integer  "min_increment"
   end
 
   add_index "auctions", ["creator_id"], name: "index_auctions_on_creator_id", using: :btree
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150924221058) do
     t.datetime "updated_at", null: false
     t.integer  "auction_id"
     t.integer  "bidder_id"
+    t.decimal  "max_amount"
   end
 
   add_index "bids", ["auction_id"], name: "index_bids_on_auction_id", using: :btree

@@ -22,14 +22,14 @@ p
   strong Bids:
   br
 
-  table.table.table-striped
+  table.table.table-striped.table-condensed
     thead
       tr
         th= model_class.human_attribute_name(:id)
         th= model_class.human_attribute_name(:amount)
         th= model_class.human_attribute_name(:created_at)
     tbody
-      - @auction.bids.each do |bid|
+      - @auction.bids.order(created_at: :asc).each do |bid|
         tr
           td= bid.id
           td= bid.amount

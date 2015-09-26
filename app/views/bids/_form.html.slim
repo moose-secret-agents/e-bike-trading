@@ -1,6 +1,6 @@
 = bootstrap_form_for [@auction, @bid] do |f|
 
-  = f.number_field :amount
+  = f.number_field :max_amount
 
   = f.primary
   = link_to t('.cancel', :default => t("helpers.links.cancel")), auction_path(@auction), :class => 'btn'

@@ -12,10 +12,10 @@ class User < ActiveRecord::Base
 
   # Creates a new bid on the supplied auction with the specified amount
   # returns error message
-  def place_bid_on(auction, amount)
-    bid = bids.build(auction: auction, amount: amount)
+  def place_bid_on(auction, max_amount)
+    bid = bids.build(auction: auction, max_amount: max_amount)
     if bid.is_high_enough? and bid.is_within_time?
-      bid.save
+      #bid.save
       auction.place_bid bid
     elsif !bid.is_within_time?
       raise Bid::InvalidBidError.new 'Auction time is over'

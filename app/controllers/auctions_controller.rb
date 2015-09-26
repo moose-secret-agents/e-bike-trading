@@ -14,7 +14,7 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/new
   def new
-    @auction = current_user.auctions.build
+    @auction = current_user.auctions.build(min_increment:5,end_time: DateTime.now + 1.week)
   end
 
   # GET /auctions/1/edit
@@ -66,6 +66,6 @@ class AuctionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def auction_params
-      params.require(:auction).permit(:imagePath, :brand, :model, :price, :power, :range, :end_time)
+      params.require(:auction).permit(:imagePath, :brand, :model, :price, :power, :range, :end_time, :increment)
     end
 end
