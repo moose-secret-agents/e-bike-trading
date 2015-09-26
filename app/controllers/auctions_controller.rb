@@ -8,12 +8,7 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/1
   def show
-    imgurClient = Imgur.new 'be637321cf3de65'
-    img = Imgur::LocalImage.new('test.jpg', title: 'Test post please ignore')
-    uploaded = imgurClient.upload(img)
-    #puts "uploaded: #{uploaded.link}"
-    #"<img src='#{uploaded.link}' /><p>Uploaded to #{uploaded.link}</p>"
-    @image_link=uploaded.link
+    #@image_link=Auction.find(:id)
   end
 
   # GET /auctions/new
@@ -27,8 +22,21 @@ class AuctionsController < ApplicationController
 
   # POST /auctions
   def create
-    @auction = Auction.new(auction_params)
+    imgurClient = Imgur.new 'be637321cf3de65'
 
+    imgLink=params[:auction][:imagePath]
+
+    #'/home/dominicsina/Desktop/RubyProjects/e-bike-trading/app/assets/images/test.jpg'
+    img = Imgur::LocalImage.new(imgLink, title: 'Test post please ignore')
+    uploaded = imgurClient.upload(img)
+    #puts "uploaded: #{uploaded.link}"
+    #"<img src='#{uploaded.link}' /><p>Uploaded to #{uploaded.link}</p>"
+    @image_link=uploaded.link
+
+
+    @auction = Auction.new(auction_params)
+    @auction.imagePath=@image_link
+    #@auction.imagePath=@auction
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'
     else
@@ -59,6 +67,6 @@ class AuctionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def auction_params
-      params.require(:auction).permit(:brand, :model, :price, :power, :range)
+      params.require(:auction).permit(:imagePath, :brand, :model, :price, :power, :range)
     end
 end

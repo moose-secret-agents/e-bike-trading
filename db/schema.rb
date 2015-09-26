@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924121921) do
+ActiveRecord::Schema.define(version: 20150925231116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150924121921) do
     t.datetime "updated_at", null: false
     t.integer  "power"
     t.integer  "range"
+    t.string   "imagePath"
   end
 
   create_table "bids", force: :cascade do |t|
