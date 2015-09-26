@@ -2,12 +2,6 @@
 .page-header
   h1=t '.title', :default => model_class.model_name.human.titleize
 
-
-  //img = Imgur::LocalImage.new('test.jpg', title: 'Test post please ignore')
-  //uploaded = imgurClient.upload(img)
-  //puts "uploaded: #{uploaded.link}"
-  //"<img src='#{uploaded.link}' /><p>Uploaded to #{uploaded.link}</p>"
-  //http://i.imgur.com§/yvgL1Xs
   =image_tag(@auction.imagePath)
 
 p
