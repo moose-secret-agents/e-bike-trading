@@ -1,5 +1,5 @@
 class Auction < ActiveRecord::Base
-  validates_presence_of :imagePath, :brand, :model, :price
+  validates_presence_of :brand, :model, :price
   validates :price, :numericality => { :greater_than_or_equal_to => 1 }
 
   has_many :bids

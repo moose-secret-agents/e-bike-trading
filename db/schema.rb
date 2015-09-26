@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(version: 20150926125212) do
     t.datetime "updated_at",    null: false
     t.integer  "power"
     t.integer  "range"
-    t.string   "imagePath"
     t.datetime "end_time"
     t.integer  "creator_id"
+    t.string   "imagePath"
     t.integer  "min_increment"
   end
 
