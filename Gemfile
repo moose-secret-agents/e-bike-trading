@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 gem 'imgur-api', require: 'imgur'
+gem 'rails_12factor', group: :production
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -45,6 +46,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Get some data about the state of the request
+  gem 'rack-mini-profiler'
 end
 
 # Gems for Bootstrap
@@ -53,4 +57,15 @@ gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'master'
 gem 'bootstrap_form'
 
+# Use slim templating language
 gem 'slim-rails'
+
+# Use sorcery as authentication solution
+gem 'sorcery'
+
+# Use pundit to control user rights management
+gem 'pundit'
+
+# Seed random data
+gem 'fabrication'
+gem 'faker'
