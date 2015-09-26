@@ -2,6 +2,10 @@ class BidsController < ApplicationController
   before_action :set_auction, only: [:index, :create, :new]
   before_action :require_login, only: [:new, :create]
 
+  rescue_from Bid::InvalidBidError do |error|
+    redirect_to @auction, alert: error.message
+  end
+
   def index
     @bids = @auction.bids
   end
@@ -14,22 +18,12 @@ class BidsController < ApplicationController
   def create
     @bid = current_user.place_bid_on(@auction, bid_params[:amount])
 
-    if bid_is_high_enough? and bid_is_within_time?
-      @bid.save
-      @auction.update_price(@bid.amount)
-      @auction.update_time
-      flash[:success] = 'Bid successfully created'
-    elsif !bid_is_within_time?
-      @bid.destroy
-      flash[:error] = 'Auction time is over'
-    else
-      @bid.destroy
-      flash[:error] = 'Bid is too low'
-    end
-    redirect_to @auction
+    redirect_to @auction, notice: 'Successfully placed bid'
   end
 
+
   private
+
     def set_bid
       @bid = Bid.find(params[:id])
     end
@@ -38,17 +32,7 @@ class BidsController < ApplicationController
       @auction = Auction.find(params[:auction_id])
     end
 
-    def bid_is_within_time?
-      @auction.end_time.to_i > Time.now.to_i + 7200
-    end
 
-    def bid_is_high_enough?
-      if @auction.bids.empty?
-        @bid.amount >= @auction.price
-      else
-        @bid.amount > @auction.price
-      end
-    end
 
   def bid_params
     params.require(:bid).permit(:amount)

@@ -8,18 +8,11 @@ class Auction < ActiveRecord::Base
   has_many :bidders, through: :bids
 
 
-  def update_price max_bid
-    self.price = max_bid
+  # updates the auction with a VALID bid - extends auction if needed
+  def place_bid(bid)
+    self.price = bid.amount
+    self.end_time += 15.minutes if (self.end_time - Time.now) < 5.minutes
     self.save
-  end
-
-  def update_time
-    remaining_time = ((self.end_time.to_i - Time.now.to_i)/60 -120)
-
-    if remaining_time < 5
-      self.end_time += 900 # 15min
-      self.save
-    end
   end
 
 end

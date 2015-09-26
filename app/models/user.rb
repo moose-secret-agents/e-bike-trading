@@ -11,7 +11,18 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
 
   # Creates a new bid on the supplied auction with the specified amount
+  # returns error message
   def place_bid_on(auction, amount)
-    bids.create(auction: auction, amount: amount)
+    bid = bids.build(auction: auction, amount: amount)
+    if bid.is_high_enough? and bid.is_within_time?
+      bid.save
+      auction.place_bid bid
+    elsif !bid.is_within_time?
+      raise Bid::InvalidBidError.new 'Auction time is over'
+    else
+      raise Bid::InvalidBidError.new 'Bid is too low'
+    end
+    bid
   end
+
 end
