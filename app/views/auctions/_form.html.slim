@@ -2,9 +2,10 @@
 
   = f.text_field :brand
   = f.text_field :model
-  = f.number_field :price
-  = f.number_field :range
-  = f.number_field :power
+  = f.number_field :price, append: 'CHF'
+  = f.number_field :range, append: 'Km'
+  = f.number_field :power, append: 'Watts'
+  = f.number_field :min_increment, append: 'CHF'
   = f.datetime_select :end_time, order: [:day, :month, :year]
 
   = f.primary
