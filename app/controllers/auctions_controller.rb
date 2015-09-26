@@ -26,8 +26,11 @@ class AuctionsController < ApplicationController
   def create
     @auction = current_user.auctions.create(auction_params)
 
-    uploaded_image = params[:auction][:imagePath].tempfile
-    @auction.assign_image uploaded_image
+    # upload image to imgur if image was given in form
+    if params[:auction][:imagePath]
+      uploaded_image = params[:auction][:imagePath].tempfile
+      @auction.assign_image uploaded_image
+    end
 
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'

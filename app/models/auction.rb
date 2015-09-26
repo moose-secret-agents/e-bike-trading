@@ -37,8 +37,7 @@ class Auction < ActiveRecord::Base
   end
 
   def assign_image(image)
-    imgur_image = Imgur::LocalImage.new(image, title: 'null')
-    image_url = ImageUploader.new.upload imgur_image
+    image_url = ImageUploader.new.upload image
     update_attribute(:imagePath, image_url || '')
   end
 

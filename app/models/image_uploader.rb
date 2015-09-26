@@ -7,7 +7,8 @@ class ImageUploader
 
   # returns url to uploaded image
   def upload(image)
-    uploaded = @client.upload image
+    imgur_image = Imgur::LocalImage.new(image, title: 'null')
+    uploaded = @client.upload imgur_image
     uploaded.link
   end
 end
