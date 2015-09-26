@@ -2,7 +2,7 @@
 .page-header
   h1=t '.title', :default => model_class.model_name.human.titleize
 
-  =image_tag(@auction.imagePath)
+  = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
 
 p
   strong= model_class.human_attribute_name(:brand) + ':'

@@ -24,26 +24,16 @@ class AuctionsController < ApplicationController
 
   # POST /auctions
   def create
-    imgurClient = Imgur.new 'be637321cf3de65'
-
-    begin
-      img = Imgur::LocalImage.new(params[:auction][:imagePath], title: 'Test post please ignore')
-      uploaded = imgurClient.upload(img)
-      link=uploaded.link
-    rescue
-      link=''
-    end
-
     @auction = current_user.auctions.create(auction_params)
-    @auction.imagePath=link
-    #@auction.imagePath=@auction
+
+    uploaded_image = params[:auction][:imagePath].tempfile
+    @auction.assign_image uploaded_image
+
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'
     else
       render :new
     end
-  rescue
-
   end
 
   # PATCH/PUT /auctions/1

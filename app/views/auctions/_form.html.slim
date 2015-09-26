@@ -1,6 +1,5 @@
-= bootstrap_form_for @auction do |f|
+= bootstrap_form_for @auction, layout: :horizontal do |f|
 
-  = f.text_field :imagePath
   = f.text_field :brand
   = f.text_field :model
   = f.number_field :price, append: 'CHF'
@@ -8,6 +7,8 @@
   = f.number_field :power, append: 'Watts'
   = f.number_field :min_increment, append: 'CHF'
   = f.datetime_select :end_time, order: [:day, :month, :year]
+  = f.file_field :imagePath
 
-  = f.primary
-  = link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn'
+  .actions.pull-right
+    = f.primary
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), auctions_path, :class => 'btn'

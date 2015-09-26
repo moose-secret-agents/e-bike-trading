@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20150926125212) do
     t.integer  "range"
     t.datetime "end_time"
     t.integer  "creator_id"
-    t.string   "imagePath"
     t.integer  "min_increment"
+    t.string   "imagePath"
   end
 
   add_index "auctions", ["creator_id"], name: "index_auctions_on_creator_id", using: :btree
