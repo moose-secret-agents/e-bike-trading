@@ -16,7 +16,7 @@ class BidsController < ApplicationController
 
   # POST /bids
   def create
-    @bid = current_user.place_bid_on(@auction, bid_params[:amount])
+    @bid = current_user.place_bid_on(@auction, bid_params[:max_amount])
 
     redirect_to @auction, notice: 'Successfully placed bid'
   end
@@ -35,7 +35,7 @@ class BidsController < ApplicationController
 
 
   def bid_params
-    params.require(:bid).permit(:amount)
+    params.require(:bid).permit(:max_amount)
   end
 
 end

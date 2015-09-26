@@ -8,12 +8,13 @@ class Bid < ActiveRecord::Base
 
   def is_high_enough?
     if auction.bids.empty?
-      self.amount >= auction.price
+      self.max_amount >= auction.price
     else
-      self.amount > auction.price
+      self.max_amount >= auction.price + auction.min_increment
     end
   end
 
   class InvalidBidError < StandardError
   end
 end
+

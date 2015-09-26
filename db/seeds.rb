@@ -5,16 +5,18 @@ Fabricator(:user) do
 end
 
 Fabricator(:bid) do
-  amount { Faker::Number.between(10, 100) }
+  val = Faker::Number.between(10, 100)
+  max_amount { val }
+  amount { val }
 end
 
 Fabricator(:auction) do
   brand { Faker::Company.name }
   model { Faker::Commerce.product_name }
-  price { Faker::Commerce.price }
+  price { Faker::Number.between(100, 2000) }
   power { Faker::Number.between(100, 999) }
   range { Faker::Number.between(100, 999) }
-  min_increment { Faker::Number.between(2, 50) }
+  min_increment  5
   end_time { Faker::Time.forward(14, :all) }
   creator { User.all.sample }
 
