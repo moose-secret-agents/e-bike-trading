@@ -8,27 +8,48 @@ class Auction < ActiveRecord::Base
   has_many :bidders, through: :bids
 
 
-  # updates the auction with a VALID bid - extends auction if needed
+  # updates the auction with a VALID bid - extends auction if needed, performs auto-bidding
   def place_bid(bid)
-    self.price = self.price + self.min_increment
-    bid.amount = self.price
-    bid.save
+    user_bid = self.bids.find_by(bidder: bid.bidder)
+    if user_bid.nil?
+      puts "user bid not found, inserting new"
+      self.price = self.price + 2*self.min_increment >bid.max_amount ? bid.max_amount : self.price + self.min_increment
+      bid.amount = self.price
+      bid.save
+    elsif user_bid.max_amount<bid.max_amount
+      puts "user bid found, updating"
+      user_bid.update_attribute(:max_amount, bid.max_amount)
+    else
+      puts "aborting"
+      return
+    end
 
-    sorted_bids = self.bids.order(created_at: :asc)
+    sorted_bids = self.bids.order(updated_at: :asc)
 
     modified = true
-    #todo : fix issue where bids escalate when they shouldn't - happens when there are two bids fighting against each other
+    winning_bid = Bid.new(bidder: nil, amount: 0, max_amount: 0)
+    sorted_bids.each do |b|
+      if b.amount>winning_bid.amount
+        winning_bid = b
+      end
+    end
+
     while modified
-      #sorted_bids = self.bids.order(created_at: :asc)
+      sorted_bids = self.bids.order(updated_at: :asc)
       modified = false
       sorted_bids.each do |b|
-        puts  b.amount >= self.price
-        puts "b.amount #{b.amount} and self.price #{self.price}"
-        next if (b.max_amount < self.price + self.min_increment) or b.amount >= self.price
-        modified = true
-        bids.create(bidder: b.bidder, amount: self.price + self.min_increment, max_amount: b.max_amount) #TODO: check if double increment possible, else insert max_value instead of incremented val
-        puts "current price: #{self.price}, #{b.bidder}, amount: #{self.price + self.min_increment}, max_amount : #{b.max_amount}"
-        self.price += min_increment
+        if b.amount == winning_bid.amount and b!=winning_bid
+          modified = true
+        end
+        if b != winning_bid and winning_bid.bidder != b.bidder and b.max_amount>=winning_bid.amount + self.min_increment
+          modified = true
+
+          new_price = self.price + ( 2*self.min_increment ) > b.max_amount ? b.max_amount : self.price + self.min_increment
+          new_bid = bids.create(bidder: b.bidder, amount: new_price, max_amount: b.max_amount)
+          winning_bid = new_bid
+          self.price = winning_bid.amount
+        end
+
       end
     end
 
