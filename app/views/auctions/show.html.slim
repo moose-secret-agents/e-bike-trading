@@ -18,14 +18,17 @@ dl.dl-horizontal
   dd= number_to_currency @auction.min_increment
 
 hr
-h3 Current Highest Bid
+- if @auction.winning_bid
+  h3 Current Highest Bid
 
-dl.dl-horizontal
-  dt Bidder:
-  dd= short_email(@auction.winning_bid.bidder)
-  dt Amount:
-  dd= number_to_currency @auction.current_price
-
+  dl.dl-horizontal
+    dt Bidder:
+    dd= short_email(@auction.winning_bid.bidder)
+    dt Amount:
+    dd= number_to_currency @auction.current_price
+- else
+  h3 No Bids yet
+  
 hr
 h3 Bid History
 
