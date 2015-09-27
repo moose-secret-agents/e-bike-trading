@@ -7,6 +7,15 @@ class UserPolicy
   end
 
   def edit?
-    @current_user == user
+    is_current_user?
   end
+
+  def destroy?
+    is_current_user?
+  end
+
+  private
+    def is_current_user?
+      @current_user == user
+    end
 end

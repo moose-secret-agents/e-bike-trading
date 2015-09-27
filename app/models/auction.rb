@@ -7,6 +7,12 @@ class Auction < ActiveRecord::Base
   belongs_to :creator, class_name: 'User' #instead of belongs_to :user, which is not very readable
   has_many :bidders, through: :bids
 
+  # Scope for all active auctions
+  scope :active, -> { where('end_time > ?', Time.now) }
+
+  def time_left
+    end_time - Time.now
+  end
 
   # updates the auction with a VALID bid - extends auction if needed, performs auto-bidding
   def place_bid(bid)
