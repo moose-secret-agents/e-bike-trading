@@ -24,6 +24,22 @@ en:
   time:
     formats:
       countdown_format: "%Y/%m/%d %H:%M:%S"
+  number:
+    currency:
+      format:
+        delimiter: "'"
+        format: "%u %n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: CHF
+    format:
+      delimiter: "'"
+      precision: 2
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
 
   pundit:
      default: 'You cannot perform this action.'
@@ -32,3 +48,14 @@ en:
        create?: 'You cannot create auctions!'
        edit?: 'You cannot edit this auction'
        destroy?: 'You cannot delete this auction'
+
+  activerecord:
+    models:
+      user: User
+    attributes:
+      auction:
+        creator: Vendor
+        price: Current price
+        min_increment: Increment
+      bid:
+        created_at: Placed on

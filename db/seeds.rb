@@ -13,15 +13,12 @@ end
 Fabricator(:auction) do
   brand { Faker::Company.name }
   model { Faker::Commerce.product_name }
-  price { Faker::Number.between(100, 2000) }
+  starting_price { Faker::Number.between(100, 2000) }
   power { Faker::Number.between(100, 999) }
   range { Faker::Number.between(100, 999) }
   min_increment  5
   end_time { Faker::Time.forward(14, :all) }
   creator { User.all.sample }
-
-  # Seed up to 3 random bids for this auction with a random User as bidder
-  bids(rand: 1) { |attrs, i| Fabricate(:bid, bidder: User.all.sample) }
 end
 
 # Seed users
@@ -38,5 +35,11 @@ Auction.destroy_all
 
 10.times do
   Fabricate(:auction)
+end
+
+20.times do
+  auction = Auction.all.sample
+  bidder = (User.all - [auction.creator]).sample
+  bidder.place_bid_on(auction, auction.next_amount + Faker::Number.between(0, 50))
 end
 

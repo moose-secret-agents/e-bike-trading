@@ -11,7 +11,7 @@ class BidsController < ApplicationController
   end
 
   def new
-    @bid = current_user.bids.build(auction: @auction)
+    @bid = current_user.bids.build(auction: @auction, max_amount: @auction.next_amount)
   end
 
   # POST /bids

@@ -8,9 +8,9 @@ class Bid < ActiveRecord::Base
 
   def is_high_enough?
     if auction.bids.empty?
-      self.max_amount >= auction.price
+      self.max_amount >= auction.current_price
     else
-      self.max_amount >= auction.price + auction.min_increment
+      self.max_amount >= auction.current_price + auction.min_increment
     end
   end
 

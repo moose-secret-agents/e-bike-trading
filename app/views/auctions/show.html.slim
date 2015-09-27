@@ -4,39 +4,45 @@
 
   = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
 
-p
-  strong= model_class.human_attribute_name(:brand) + ':'
-  br
-  = @auction.brand
-p
-  strong= model_class.human_attribute_name(:model) + ':'
-  br
-  = @auction.model
-p
-  strong= model_class.human_attribute_name(:price) + ':'
-  br
-  = @auction.price
-  br
-  br
-p
-  strong Bids:
-  br
+dl.dl-horizontal
+  dt= model_class.human_attribute_name(:brand) + ':'
+  dd= @auction.brand
 
-  table.table.table-striped.table-condensed
-    thead
+  dt= model_class.human_attribute_name(:model) + ':'
+  dd= @auction.model
+
+  dt= model_class.human_attribute_name(:starting_price) + ':'
+  dd= number_to_currency @auction.starting_price
+
+  dt= model_class.human_attribute_name(:min_increment) + ':'
+  dd= number_to_currency @auction.min_increment
+
+hr
+h3 Current Highest Bid
+
+dl.dl-horizontal
+  dt Bidder:
+  dd= short_email(@auction.winning_bid.bidder)
+  dt Amount:
+  dd= number_to_currency @auction.current_price
+
+hr
+h3 Bid History
+
+table.table.table-striped.table-condensed
+  thead
+    tr
+      th= Bid.human_attribute_name(:bidder)
+      th= Bid.human_attribute_name(:amount)
+      th= Bid.human_attribute_name(:created_at)
+  tbody
+    - @auction.bids.order(created_at: :asc).each do |bid|
       tr
-        th= model_class.human_attribute_name(:id)
-        th= model_class.human_attribute_name(:amount)
-        th= model_class.human_attribute_name(:created_at)
-    tbody
-      - @auction.bids.order(created_at: :asc).each do |bid|
-        tr
-          td= bid.id
-          td= bid.amount
-          td= l bid.created_at, format: :countdown_format
+        td= link_to short_email(bid.bidder), user_path(bid.bidder)
+        td= number_to_currency bid.amount
+        td= l bid.created_at, format: :countdown_format
 
-
-= link_to 'New Bid', new_auction_bid_path(@auction), class: 'btn btn-default'
+= link_to 'Bid on Auction', new_auction_bid_path(@auction), class: 'btn btn-primary'
 '
 = link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
 '

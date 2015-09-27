@@ -1,6 +1,6 @@
 class Auction < ActiveRecord::Base
-  validates_presence_of :brand, :model, :price, :min_increment
-  validates :price, :numericality => { :greater_than_or_equal_to => 1 }
+  validates_presence_of :brand, :model, :starting_price, :min_increment
+  validates :starting_price, :numericality => { :greater_than_or_equal_to => 1 }
 
   has_many :bids
 
@@ -10,6 +10,10 @@ class Auction < ActiveRecord::Base
   # Scope for all active auctions
   scope :active, -> { where('end_time > ?', Time.now) }
 
+  after_create do
+    update_attribute(:current_price, starting_price)
+  end
+
   def time_left
     end_time - Time.now
   end
@@ -18,15 +22,15 @@ class Auction < ActiveRecord::Base
   def place_bid(bid)
     user_bid = self.bids.find_by(bidder: bid.bidder)
     if user_bid.nil?
-      puts "user bid not found, inserting new"
-      self.price = self.price + 2*self.min_increment >bid.max_amount ? bid.max_amount : self.price + self.min_increment
-      bid.amount = self.price
+      logger.debug "user bid not found, inserting new"
+      self.current_price = self.current_price + 2*self.min_increment >bid.max_amount ? bid.max_amount : self.current_price + self.min_increment
+      bid.amount = self.current_price
       bid.save
     elsif user_bid.max_amount<bid.max_amount
-      puts "user bid found, updating"
+      logger.debug "user bid found, updating"
       user_bid.update_attribute(:max_amount, bid.max_amount)
     else
-      puts "aborting"
+      logger.debug "aborting"
       return
     end
 
@@ -50,10 +54,10 @@ class Auction < ActiveRecord::Base
         if b != winning_bid and winning_bid.bidder != b.bidder and b.max_amount>=winning_bid.amount + self.min_increment
           modified = true
 
-          new_price = self.price + ( 2*self.min_increment ) > b.max_amount ? b.max_amount : self.price + self.min_increment
+          new_price = self.current_price + ( 2*self.min_increment ) > b.max_amount ? b.max_amount : self.current_price + self.min_increment
           new_bid = bids.create(bidder: b.bidder, amount: new_price, max_amount: b.max_amount)
           winning_bid = new_bid
-          self.price = winning_bid.amount
+          self.current_price = winning_bid.amount
         end
 
       end
@@ -66,6 +70,14 @@ class Auction < ActiveRecord::Base
   def assign_image(image)
     image_url = ImageUploader.new.upload image
     update_attribute(:imagePath, image_url || '')
+  end
+
+  def winning_bid
+    bids.order(amount: :desc).first
+  end
+
+  def next_amount
+    current_price + min_increment
   end
 
 end
