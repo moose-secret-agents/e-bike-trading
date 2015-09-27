@@ -28,6 +28,7 @@ end
 User.destroy_all
 
 Fabricate(:user, email: 'test', password: 'test', password_confirmation: 'test')
+Fabricate(:user, email: 'test2', password: 'test', password_confirmation: 'test')
 5.times do
   Fabricate(:user)
 end
