@@ -17,7 +17,11 @@ class BidsController < ApplicationController
   # POST /bids
   def create
     @bid = current_user.place_bid_on(@auction, bid_params[:max_amount])
-
+    begin
+      $twitter.update("User #{User.find(@bid.bidder_id).email} has just bid #{@bid.max_amount} on a #{Auction.find(@bid.auction_id).brand} #{Auction.find(@bid.auction_id).model}")
+    rescue
+      #status might be over 140 chars, then just dont tweet
+    end
     redirect_to @auction, notice: 'Successfully placed bid'
   end
 

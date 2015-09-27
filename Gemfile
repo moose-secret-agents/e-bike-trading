@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
+gem 'twitter'
 gem 'imgur-api', require: 'imgur'
 gem 'rails_12factor', group: :production
 
