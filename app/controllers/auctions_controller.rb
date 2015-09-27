@@ -66,6 +66,6 @@ class AuctionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def auction_params
-      params.require(:auction).permit(:imagePath, :brand, :model, :price, :power, :range, :end_time, :increment)
+      params.require(:auction).permit(:imagePath, :brand, :model, :price, :power, :range, :end_time, :min_increment)
     end
 end
