@@ -70,3 +70,6 @@ gem 'pundit'
 # Seed random data
 gem 'fabrication'
 gem 'faker'
+
+# Scheduler
+gem 'rufus-scheduler'
