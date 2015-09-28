@@ -28,7 +28,7 @@
 
       - if @auction.running?
         dt Ends in:
-        dd.countdown= @auction.end_time
+        dd.countdown data={countdown: end_time(@auction)} @auction.time_left
 
     hr
     - if @auction.running? and @auction.winning_bid

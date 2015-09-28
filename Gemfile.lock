@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/rweng/jquery-datatables-rails
+  revision: a2fafcb2c78d817c5ad849d834ed259a1b43c269
+  branch: master
+  specs:
+    jquery-datatables-rails (3.3.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
+
+GIT
   remote: https://github.com/seyhunak/twitter-bootstrap-rails.git
   revision: 665e50e7511d5418fbcf76ccb15c593f953d197a
   branch: master
@@ -244,6 +255,7 @@ DEPENDENCIES
   fabrication
   faker
   imgur-api
+  jquery-datatables-rails!
   jquery-rails
   less-rails
   pg

@@ -2,12 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-ready = ->
+init_countdown = ->
+  console.log 'Reinitializing countdown'
   $.each $('.countdown'), (index, value) ->
-    time = $(value).html()
+    time = $(value).data('countdown')
 
     $(value).countdown time, (event) ->
       $(this).html(event.strftime('%-Dd %H:%M:%S'))
+
+init_datatables = ->
+  auctions_table = $('#auctions-table')
+  auctions_table.DataTable
+    "order": [[ 5, 'asc' ]]
+  auctions_table.on 'draw.dt', ->
+    init_countdown()
+
+ready = ->
+  init_countdown()
+  init_datatables()
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

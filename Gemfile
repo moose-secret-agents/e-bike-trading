@@ -73,3 +73,6 @@ gem 'faker'
 
 # Scheduler
 gem 'rufus-scheduler'
+
+# Client-side searching and paginatino for tables
+gem 'jquery-datatables-rails', git: "https://github.com/rweng/jquery-datatables-rails", branch: "master"
