@@ -10,6 +10,9 @@ dl.dl-horizontal
   dt= Auction.human_attribute_name(:model) + ':'
   dd= @auction.model
 
+  dt= Auction.human_attribute_name(:description) + ':'
+  dd= @auction.description
+
   dt= Auction.human_attribute_name(:starting_price) + ':'
   dd= number_to_currency @auction.starting_price
 
@@ -18,6 +21,13 @@ dl.dl-horizontal
 
   dt= Auction.human_attribute_name(:status) + ':'
   dd= @auction.status
+
+  dt Ends at:
+  dd= l @auction.end_time
+
+  - if @auction.running?
+    dt Ends in:
+    dd.countdown= @auction.end_time
 
 hr
 - if @auction.running? and @auction.winning_bid

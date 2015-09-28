@@ -1,12 +1,10 @@
 .page-header
   h1.pull-left=t '.title', :default => Auction.model_name.human.pluralize.titleize
 
-  .filters.pull-right
-    = link_to 'Running Auctions', auctions_path(filter: 'running'), class: 'btn btn-default btn-xs'
-    '
-    = link_to 'Ended Auctions', auctions_path(filter: 'ended'), class: 'btn btn-default btn-xs'
-    '
-    = link_to 'All Auctions', auctions_path(filter: 'all'), class: 'btn btn-default btn-xs'
+  .btn-group.filters.pull-right
+    = link_to 'Running Auctions', auctions_path(filter: 'running'), class: 'btn btn-default btn-xs', role: 'button'
+    = link_to 'Ended Auctions', auctions_path(filter: 'ended'), class: 'btn btn-default btn-xs', role: 'button'
+    = link_to 'All Auctions', auctions_path(filter: 'all'), class: 'btn btn-default btn-xs', role: 'button'
 .table-responsive
   table.table.table-striped
     thead
