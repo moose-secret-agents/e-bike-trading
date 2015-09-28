@@ -24,8 +24,8 @@
           td= link_to short_email(auction.creator), user_path(auction.creator)
           td= auction.brand
           td= auction.model
-          td= number_to_currency auction.current_price
-          td.countdown data={countdown: end_time(auction)} end_time(auction)
+          td[data-order=auction.current_price] = number_to_currency(auction.current_price)
+          td.countdown[data-countdown=end_time(auction) data-order=auction.time_left.to_i] = end_time(auction)
           td= link_to badge(auction.bids.count, :primary), auction_path(auction, anchor: 'bid-history')
           td
             = link_to 'Bid', new_auction_bid_path(auction), class: 'btn btn-primary btn-xs'
