@@ -1,29 +1,38 @@
-- model_class = Auction
 .page-header
-  h1=t '.title', :default => model_class.model_name.human.titleize
+  h1=t '.title', :default => Auction.model_name.human.titleize
 
   = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
 
 dl.dl-horizontal
-  dt= model_class.human_attribute_name(:brand) + ':'
+  dt= Auction.human_attribute_name(:brand) + ':'
   dd= @auction.brand
 
-  dt= model_class.human_attribute_name(:model) + ':'
+  dt= Auction.human_attribute_name(:model) + ':'
   dd= @auction.model
 
-  dt= model_class.human_attribute_name(:starting_price) + ':'
+  dt= Auction.human_attribute_name(:starting_price) + ':'
   dd= number_to_currency @auction.starting_price
 
-  dt= model_class.human_attribute_name(:min_increment) + ':'
+  dt= Auction.human_attribute_name(:min_increment) + ':'
   dd= number_to_currency @auction.min_increment
 
+  dt= Auction.human_attribute_name(:status) + ':'
+  dd= @auction.status
+
 hr
-- if @auction.winning_bid
+- if @auction.running? and @auction.winning_bid
   h3 Current Highest Bid
 
   dl.dl-horizontal
     dt Bidder:
     dd= short_email(@auction.winning_bid.bidder)
+    dt Amount:
+    dd= number_to_currency @auction.current_price
+- elsif @auction.ended?
+  h3 Auction Winner!
+  dl.dl-horizontal
+    dt Winner:
+    dd= short_email(@auction.winner)
     dt Amount:
     dd= number_to_currency @auction.current_price
 - else

@@ -2,18 +2,18 @@
 .page-header
   h1=t '.title', :default => model_class.model_name.human.titleize
 
-p
-  strong= model_class.human_attribute_name(:email) + ':'
-  br
-  = @user.email
-p
-  strong= model_class.human_attribute_name(:crypted_password) + ':'
-  br
-  = @user.crypted_password
-p
-  strong= model_class.human_attribute_name(:salt) + ':'
-  br
-  = @user.salt
+dl.dl-horizontal
+  dt= model_class.human_attribute_name(:email) + ':'
+  dd= @user.email
+
+hr
+h4 Won Auctions
+table.table.table-striped
+  - @user.won_auctions.each do |auction|
+    tr
+      td= link_to auction.id, auction_path(auction)
+      td= number_to_currency auction.current_price
+
 
 = link_to t('.back', :default => t("helpers.links.back")), users_path, :class => 'btn btn-default'
 '
