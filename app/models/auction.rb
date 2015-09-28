@@ -5,9 +5,10 @@ class Auction < ActiveRecord::Base
   enum status: { running: 0, ended: 1, suspended: 2 }
 
   has_many :bids
+  has_many :bidders, through: :bids
 
   belongs_to :creator, class_name: 'User' #instead of belongs_to :user, which is not very readable
-  has_many :bidders, through: :bids
+  belongs_to :winner, class_name: 'User'
 
   # Scope for all active auctions
   scope :active, -> { where('end_time > ?', Time.now) }
@@ -91,7 +92,8 @@ class Auction < ActiveRecord::Base
     # set status to :ended
     ended!
 
-    # TODO: Alert bidder that he has won the auction
+    self.winner = winning_bid.bidder
+    self.save
   end
 
 end

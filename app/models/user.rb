@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
   has_many :auctions, foreign_key: 'creator_id'
+  has_many :won_auctions, class_name: 'Auction', foreign_key: 'winner_id'
+
   has_many :bids, foreign_key: 'bidder_id'
 
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes["password"] }
