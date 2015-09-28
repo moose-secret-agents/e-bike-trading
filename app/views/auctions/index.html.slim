@@ -1,15 +1,21 @@
-- model_class = Auction
 .page-header
-  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+  h1.pull-left=t '.title', :default => Auction.model_name.human.pluralize.titleize
+
+  .filters.pull-right
+    = link_to 'Running Auctions', auctions_path(filter: 'running'), class: 'btn btn-default btn-xs'
+    '
+    = link_to 'Ended Auctions', auctions_path(filter: 'ended'), class: 'btn btn-default btn-xs'
+    '
+    = link_to 'All Auctions', auctions_path(filter: 'all'), class: 'btn btn-default btn-xs'
 .table-responsive
   table.table.table-striped
     thead
       tr
-        th= model_class.human_attribute_name(:id)
-        th.col-md-1= model_class.human_attribute_name(:creator)
-        th.col-md-2= model_class.human_attribute_name(:brand)
-        th.col-md-2= model_class.human_attribute_name(:model)
-        th.col-md-1= model_class.human_attribute_name(:current_price)
+        th= Auction.human_attribute_name(:id)
+        th.col-md-1= Auction.human_attribute_name(:creator)
+        th.col-md-2= Auction.human_attribute_name(:brand)
+        th.col-md-2= Auction.human_attribute_name(:model)
+        th.col-md-1= Auction.human_attribute_name(:current_price)
         th Time left
         th #Bids
         th=t '.actions', :default => t("helpers.actions")

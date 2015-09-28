@@ -4,7 +4,14 @@ class AuctionsController < ApplicationController
 
   # GET /auctions
   def index
-    @auctions = Auction.active.order(end_time: :asc)
+    auctions = case params[:filter]
+                  when 'running' then Auction.running
+                  when 'ended' then Auction.ended
+                  when 'all' then Auction.all
+                  else Auction.running
+               end
+
+    @auctions = auctions.order(end_time: :asc)
   end
 
   # GET /auctions/1

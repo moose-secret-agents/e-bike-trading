@@ -30,6 +30,7 @@ hr
     dd= number_to_currency @auction.current_price
 - elsif @auction.ended?
   h3 Auction Winner!
+
   dl.dl-horizontal
     dt Winner:
     dd= short_email(@auction.winner)
