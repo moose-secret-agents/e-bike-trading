@@ -2,6 +2,8 @@ class Auction < ActiveRecord::Base
   validates_presence_of :brand, :model, :starting_price, :min_increment
   validates :starting_price, :numericality => { :greater_than_or_equal_to => 1 }
 
+  enum status: { running: 0, ended: 1, suspended: 2 }
+
   has_many :bids
 
   belongs_to :creator, class_name: 'User' #instead of belongs_to :user, which is not very readable
@@ -9,9 +11,11 @@ class Auction < ActiveRecord::Base
 
   # Scope for all active auctions
   scope :active, -> { where('end_time > ?', Time.now) }
+  scope :overdue, -> { where('end_time < ?', Time.now) }
 
   after_create do
     update_attribute(:current_price, starting_price)
+    running! # set status to running
   end
 
   def time_left
@@ -72,12 +76,22 @@ class Auction < ActiveRecord::Base
     update_attribute(:imagePath, image_url || '')
   end
 
+  # Returns the currently winning bid, or nil if no bid is placed
   def winning_bid
     bids.order(amount: :desc).first
   end
 
+  # Returns the next possible bid amount
   def next_amount
     current_price + min_increment
+  end
+
+  # Ends this auction and informs winner
+  def end
+    # set status to :ended
+    ended!
+
+    # TODO: Alert bidder that he has won the auction
   end
 
 end

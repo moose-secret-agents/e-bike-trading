@@ -2,6 +2,7 @@
 
   = f.text_field :brand
   = f.text_field :model
+  = f.text_area :description, rows: 10
   = f.number_field :range, append: 'Km'
   = f.number_field :power, append: 'Watts'
   = f.number_field :starting_price, append: 'CHF'if @auction.new_record?
