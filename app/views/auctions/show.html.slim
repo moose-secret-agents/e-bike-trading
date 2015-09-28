@@ -1,76 +1,78 @@
-.page-header
-  h1=t '.title', :default => Auction.model_name.human.titleize
+.row
+  .col-md-6
+    .page-header
+      h1=t '.title', :default => Auction.model_name.human.titleize
 
-  = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
+      = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
+    dl.dl-horizontal
+      dt= Auction.human_attribute_name(:brand) + ':'
+      dd= @auction.brand
 
-dl.dl-horizontal
-  dt= Auction.human_attribute_name(:brand) + ':'
-  dd= @auction.brand
+      dt= Auction.human_attribute_name(:model) + ':'
+      dd= @auction.model
 
-  dt= Auction.human_attribute_name(:model) + ':'
-  dd= @auction.model
+      dt= Auction.human_attribute_name(:description) + ':'
+      dd= @auction.description
 
-  dt= Auction.human_attribute_name(:description) + ':'
-  dd= @auction.description
+      dt= Auction.human_attribute_name(:starting_price) + ':'
+      dd= number_to_currency @auction.starting_price
 
-  dt= Auction.human_attribute_name(:starting_price) + ':'
-  dd= number_to_currency @auction.starting_price
+      dt= Auction.human_attribute_name(:min_increment) + ':'
+      dd= number_to_currency @auction.min_increment
 
-  dt= Auction.human_attribute_name(:min_increment) + ':'
-  dd= number_to_currency @auction.min_increment
+      dt= Auction.human_attribute_name(:status) + ':'
+      dd= @auction.status
 
-  dt= Auction.human_attribute_name(:status) + ':'
-  dd= @auction.status
+      dt Ends at:
+      dd= l @auction.end_time
 
-  dt Ends at:
-  dd= l @auction.end_time
+      - if @auction.running?
+        dt Ends in:
+        dd.countdown= @auction.end_time
 
-  - if @auction.running?
-    dt Ends in:
-    dd.countdown= @auction.end_time
+    hr
+    - if @auction.running? and @auction.winning_bid
+      h3 Current Highest Bid
 
-hr
-- if @auction.running? and @auction.winning_bid
-  h3 Current Highest Bid
+      dl.dl-horizontal
+        dt Bidder:
+        dd= short_email(@auction.winning_bid.bidder)
+        dt Amount:
+        dd= number_to_currency @auction.current_price
+    - elsif @auction.ended? and @auction.winner
+      h3 Auction Winner!
 
-  dl.dl-horizontal
-    dt Bidder:
-    dd= short_email(@auction.winning_bid.bidder)
-    dt Amount:
-    dd= number_to_currency @auction.current_price
-- elsif @auction.ended? and @auction.winner
-  h3 Auction Winner!
+      dl.dl-horizontal
+        dt Winner:
+        dd= short_email(@auction.winner)
+        dt Amount:
+        dd= number_to_currency @auction.current_price
+    - elsif @auction.ended?
+      h3 Nobody placed any bids on this auction!
+    - else
+      h3 No Bids yet
 
-  dl.dl-horizontal
-    dt Winner:
-    dd= short_email(@auction.winner)
-    dt Amount:
-    dd= number_to_currency @auction.current_price
-- elsif @auction.ended?
-  h3 Nobody placed any bids on this auction!
-- else
-  h3 No Bids yet
-  
-hr
-h3#bid-history Bid History
+    hr
+    = link_to 'Bid on Auction', new_auction_bid_path(@auction), class: 'btn btn-primary'
+    '
+    = link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
+    '
+    = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
+    '
+    = link_to t('.destroy', :default => t("helpers.links.destroy")), auction_path(@auction), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
 
-table.table.table-striped.table-condensed
-  thead
-    tr
-      th= Bid.human_attribute_name(:bidder)
-      th= Bid.human_attribute_name(:amount)
-      th= Bid.human_attribute_name(:created_at)
-  tbody
-    - @auction.bids.order(created_at: :asc).each do |bid|
-      tr
-        td= link_to short_email(bid.bidder), user_path(bid.bidder)
-        td= number_to_currency bid.amount
-        td= l bid.created_at, format: :countdown_format
+  .col-md-6
+    h3#bid-history Bid History
 
-= link_to 'Bid on Auction', new_auction_bid_path(@auction), class: 'btn btn-primary'
-'
-= link_to t('.back', :default => t("helpers.links.back")), auctions_path, :class => 'btn btn-default'
-'
-= link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
-'
-= link_to t('.destroy', :default => t("helpers.links.destroy")), auction_path(@auction), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+    table.table.table-striped.table-condensed
+      thead
+        tr
+          th= Bid.human_attribute_name(:bidder)
+          th= Bid.human_attribute_name(:amount)
+          th= Bid.human_attribute_name(:created_at)
+      tbody
+        - @auction.bids.order(created_at: :asc).each do |bid|
+          tr
+            td= link_to short_email(bid.bidder), user_path(bid.bidder)
+            td= number_to_currency bid.amount
+            td= l bid.created_at, format: :countdown_format
