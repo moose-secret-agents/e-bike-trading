@@ -28,7 +28,7 @@ hr
     dd= short_email(@auction.winning_bid.bidder)
     dt Amount:
     dd= number_to_currency @auction.current_price
-- elsif @auction.ended?
+- elsif @auction.ended? and @auction.winner
   h3 Auction Winner!
 
   dl.dl-horizontal
@@ -36,6 +36,8 @@ hr
     dd= short_email(@auction.winner)
     dt Amount:
     dd= number_to_currency @auction.current_price
+- elsif @auction.ended?
+  h3 Nobody placed any bids on this auction!
 - else
   h3 No Bids yet
   
