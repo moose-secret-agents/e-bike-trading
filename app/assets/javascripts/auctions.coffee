@@ -13,7 +13,7 @@ init_countdown = ->
 init_datatables = ->
   auctions_table = $('#auctions-table')
   auctions_table.DataTable
-    "order": [[ 5, 'asc' ]]
+    "order": [[ 4, 'asc' ]]
   auctions_table.on 'draw.dt', ->
     init_countdown()
 

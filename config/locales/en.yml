@@ -46,8 +46,8 @@ en:
      auction_policy:
        update?: 'You cannot update this auction!'
        create?: 'You cannot create auctions!'
-       edit?: 'You cannot edit this auction. Only the owner of the auction can edit, auctions with bids cannot be edited.'
-       destroy?: 'You cannot delete this auction'
+       edit?: 'You cannot edit this auction. Only the owner of the auction can edit.'
+       destroy?: 'You cannot delete this auction. Auctions with bids cannot be deleted...'
 
   activerecord:
     models:

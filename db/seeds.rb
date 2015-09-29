@@ -18,7 +18,7 @@ Fabricator(:auction) do
   power { Faker::Number.between(100, 999) }
   range { Faker::Number.between(100, 999) }
   min_increment  5
-  end_time { Faker::Time.forward(14, :all) }
+  end_time { Faker::Time.forward(3, :all) }
   creator { User.all.sample }
 end
 
@@ -38,7 +38,7 @@ Auction.destroy_all
   Fabricate(:auction)
 end
 
-20.times do
+10.times do
   auction = Auction.all.sample
   bidder = (User.all - [auction.creator]).sample
   bidder.place_bid_on(auction, auction.next_amount + Faker::Number.between(0, 50))

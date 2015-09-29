@@ -5,11 +5,14 @@
     = link_to 'Running Auctions', auctions_path(filter: 'running'), class: 'btn btn-default btn-xs', role: 'button'
     = link_to 'Ended Auctions', auctions_path(filter: 'ended'), class: 'btn btn-default btn-xs', role: 'button'
     = link_to 'All Auctions', auctions_path(filter: 'all'), class: 'btn btn-default btn-xs', role: 'button'
+
+div
+  = link_to 'Create new Auction', new_auction_path, :class => 'btn btn-primary'
+  hr
 .table-responsive
   table#auctions-table.table.table-striped
     thead
       tr
-        th= Auction.human_attribute_name(:id)
         th.col-md-1= Auction.human_attribute_name(:creator)
         th.col-md-2= Auction.human_attribute_name(:brand)
         th.col-md-2= Auction.human_attribute_name(:model)
@@ -20,7 +23,6 @@
     tbody
       - @auctions.each do |auction|
         tr
-          td= link_to auction.id, auction_path(auction)
           td= link_to short_email(auction.creator), user_path(auction.creator)
           td= auction.brand
           td= auction.model
@@ -28,10 +30,10 @@
           td.countdown[data-countdown=end_time(auction) data-order=auction.time_left.to_i] = end_time(auction)
           td= link_to badge(auction.bids.count, :primary), auction_path(auction, anchor: 'bid-history')
           td
+            = link_to 'Show', auction_path(auction), class: 'btn btn-default btn-xs'
+            '
             = link_to 'Bid', new_auction_bid_path(auction), class: 'btn btn-primary btn-xs'
             '
             = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(auction), :class => 'btn btn-default btn-xs'
             '
             = link_to glyph(:trash), auction_path(auction), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
-
-= link_to t('.new', :default => t("helpers.links.new")), new_auction_path, :class => 'btn btn-primary'
