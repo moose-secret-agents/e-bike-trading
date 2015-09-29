@@ -2,8 +2,6 @@
   .col-md-6
     .page-header
       h1=t '.title', :default => Auction.model_name.human.titleize
-
-      = image_tag(@auction.imagePath, width: 400) unless @auction.imagePath.blank?
     dl.dl-horizontal
       dt= Auction.human_attribute_name(:brand) + ':'
       dd= @auction.brand
@@ -12,7 +10,7 @@
       dd= @auction.model
 
       dt= Auction.human_attribute_name(:description) + ':'
-      dd= @auction.description
+      dd= description_html @auction
 
       dt= Auction.human_attribute_name(:starting_price) + ':'
       dd= number_to_currency @auction.starting_price
@@ -63,6 +61,15 @@
     '
     = link_to 'Tweet this Auction', tweet_auction_path(@auction), class: 'btn btn-info'
   .col-md-6
+    h3 Images
+    - if @auction.images.any?
+      .image
+        - @auction.images.each do |img|
+          = image_tag(img.url, width: 150)
+      '
+      = link_to 'Delete all Images', delete_images_auction_path(@auction), class: 'btn btn-danger', method: :post unless @auction.images.empty?
+    - else
+      p No images added yet. Edit auction to add images...
     h3#bid-history Bid History
 
     table.table.table-striped.table-condensed

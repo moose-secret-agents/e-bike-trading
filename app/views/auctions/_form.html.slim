@@ -8,7 +8,10 @@
   = f.number_field :starting_price, append: 'CHF'if @auction.new_record?
   = f.number_field :min_increment, append: 'CHF' if @auction.new_record?
   = f.datetime_select :end_time, order: [:day, :month, :year]
-  = f.file_field :imagePath
+
+  hr
+  h4 Images
+  = f.file_field :images, multiple: true, help: 'You can select multiple files'
 
   .actions.pull-right
     = f.primary

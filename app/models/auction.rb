@@ -6,6 +6,7 @@ class Auction < ActiveRecord::Base
 
   has_many :bids
   has_many :bidders, through: :bids
+  has_many :images
 
   belongs_to :creator, class_name: 'User' #instead of belongs_to :user, which is not very readable
   belongs_to :winner, class_name: 'User'
@@ -74,7 +75,7 @@ class Auction < ActiveRecord::Base
 
   def assign_image(image)
     image_url = ImageUploader.new.upload image
-    update_attribute(:imagePath, image_url || '')
+    images.create(url: image_url)
   end
 
   # Returns the currently winning bid, or nil if no bid is placed

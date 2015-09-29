@@ -1,5 +1,5 @@
 class AuctionsController < ApplicationController
-  before_action :set_auction, only: [:show, :edit, :update, :destroy, :tweet]
+  before_action :set_auction, only: [:show, :edit, :update, :destroy, :tweet, :delete_images]
   before_action :require_login, only: [:new, :edit, :create, :update]
 
   # GET /auctions
@@ -21,7 +21,8 @@ class AuctionsController < ApplicationController
 
   # GET /auctions/new
   def new
-    @auction = current_user.auctions.build(min_increment:5,end_time: DateTime.now + 1.week)
+    @auction = current_user.auctions.build(min_increment:5, end_time: DateTime.now + 1.week)
+    5.times { @auction.images.build }
   end
 
   # GET /auctions/1/edit
@@ -33,11 +34,7 @@ class AuctionsController < ApplicationController
   def create
     @auction = current_user.auctions.create(auction_params)
 
-    # upload image to imgur if image was given in form
-    if params[:auction][:imagePath]
-      uploaded_image = params[:auction][:imagePath].tempfile
-      @auction.assign_image uploaded_image
-    end
+    upload_images @auction
 
     if @auction.save
       redirect_to @auction, notice: 'Auction was successfully created.'
@@ -51,11 +48,17 @@ class AuctionsController < ApplicationController
     redirect_to :back, notice: 'Tweet sent!'
   end
 
+  def delete_images
+    @auction.images.destroy_all
+    redirect_to :back, notice: 'Images deleted. Edit auction to add new images...'
+  end
+
   # PATCH/PUT /auctions/1
   def update
     authorize @auction
 
     if @auction.update(auction_params)
+      upload_images(@auction)
       redirect_to @auction, notice: 'Auction was successfully updated.'
     else
       render :edit
@@ -78,6 +81,15 @@ class AuctionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def auction_params
-      params.require(:auction).permit(:imagePath, :brand, :model, :starting_price, :power, :range, :end_time, :min_increment)
+      params.require(:auction).permit(:brand, :model, :description, :starting_price, :power, :range, :end_time, :min_increment)
+    end
+
+    def upload_images(auction)
+      # upload image to imgur if image was given in form
+      if params[:auction][:images]
+        params[:auction][:images].each do |uploaded_file|
+          auction.assign_image uploaded_file.tempfile
+        end
+      end
     end
 end

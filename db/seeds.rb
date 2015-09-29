@@ -13,6 +13,7 @@ end
 Fabricator(:auction) do
   brand { Faker::Company.name }
   model { Faker::Commerce.product_name }
+  description { Faker::Lorem.paragraphs.join('\n') }
   starting_price { Faker::Number.between(100, 2000) }
   power { Faker::Number.between(100, 999) }
   range { Faker::Number.between(100, 999) }

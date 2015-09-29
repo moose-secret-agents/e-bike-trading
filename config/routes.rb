@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :auctions, shallow: true do
     get 'tweet', on: :member, to: 'auctions#tweet', as: 'tweet'
+    post 'delete_images', on: :member, to: 'auctions#delete_images', as: 'delete_images'
     resources :bids
   end
 
