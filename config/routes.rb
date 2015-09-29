@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'logout' => 'user_sessions#destroy', :as => :logout
 
   resources :auctions, shallow: true do
+    get 'tweet', on: :member, to: 'auctions#tweet', as: 'tweet'
     resources :bids
   end
 

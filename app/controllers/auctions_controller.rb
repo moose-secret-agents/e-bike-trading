@@ -1,5 +1,5 @@
 class AuctionsController < ApplicationController
-  before_action :set_auction, only: [:show, :edit, :update, :destroy]
+  before_action :set_auction, only: [:show, :edit, :update, :destroy, :tweet]
   before_action :require_login, only: [:new, :edit, :create, :update]
 
   # GET /auctions
@@ -44,6 +44,11 @@ class AuctionsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def tweet
+    Twitterer.new.tweet("Checkout this awesome auction: #{auction_url(@auction)}")
+    redirect_to :back, notice: 'Tweet sent!'
   end
 
   # PATCH/PUT /auctions/1

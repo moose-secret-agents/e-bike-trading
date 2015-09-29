@@ -60,7 +60,8 @@
     = link_to t('.edit', :default => t("helpers.links.edit")), edit_auction_path(@auction), :class => 'btn btn-default'
     '
     = link_to t('.destroy', :default => t("helpers.links.destroy")), auction_path(@auction), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
-
+    '
+    = link_to 'Tweet this Auction', tweet_auction_path(@auction), class: 'btn btn-info'
   .col-md-6
     h3#bid-history Bid History
 
