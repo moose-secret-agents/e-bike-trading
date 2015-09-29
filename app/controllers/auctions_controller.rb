@@ -49,6 +49,8 @@ class AuctionsController < ApplicationController
   end
 
   def delete_images
+    authorize @auction
+
     @auction.images.destroy_all
     redirect_to :back, notice: 'Images deleted. Edit auction to add new images...'
   end

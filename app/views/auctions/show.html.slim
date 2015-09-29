@@ -67,7 +67,7 @@
         - @auction.images.each do |img|
           = image_tag(img.url, width: 150)
       '
-      = link_to 'Delete all Images', delete_images_auction_path(@auction), class: 'btn btn-danger', method: :post unless @auction.images.empty?
+      = link_to 'Delete all Images', delete_images_auction_path(@auction), class: 'btn btn-danger', method: :post if policy(@auction).delete_images?
     - else
       p No images added yet. Edit auction to add images...
     h3#bid-history Bid History

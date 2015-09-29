@@ -18,6 +18,10 @@ class AuctionPolicy
     is_creator?
   end
 
+  def delete_images?
+    is_creator?
+  end
+
   private
   def is_creator?
     user == @auction.creator
